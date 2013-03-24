@@ -1,0 +1,51 @@
+\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[utf-8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+% packages for the use of color
+\usepackage{color}
+\usepackage{pstcol}
+
+% colors in tables
+\usepackage{colortbl}
+\usepackage{hhline}
+
+% use color for \verbatim
+\usepackage{fancyvrb}
+
+\title{Usage of Color in \Latex}
+\author{Lothar Rubusch}
+\date{2006-10-12}
+
+\begin{document}
+
+\section{Text}
+This test sheet shows the use of colors in \LaTeX \\
+
+% background
+\pagecolor{yellow} Set background. \\
+
+% complete text
+\color{blue} The following text will be blue \dots \\
+
+% just some words
+\textcolor{red}{here're some green words} \\
+
+\dots and again some text in blue.
+
+
+
+
+
+% TODO
+\colorbox{red}{ Rot hinterlegte Box }.
+% \fcolorbox{yellow}{green}{ Gr¨une Box mit gelbem Rand }
+% Randst¨arke mit \setlength{\fboxrule}{5pt}
+% Randabstand mit \setlength{\fboxsep}{0pt}
+
+
+
+\end{document}

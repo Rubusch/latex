@@ -1,0 +1,5 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Table}{2}
+\contentsline {section}{\numberline {2}Image}{3}
+\contentsline {section}{\numberline {3}Textindex}{4}
+\contentsline {section}{\numberline {4}Formeln}{4}

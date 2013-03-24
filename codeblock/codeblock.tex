@@ -1,0 +1,42 @@
+\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[utf-8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+% Code Blocks
+\usepackage{listings} 
+\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt} 
+\lstset{language=Java}
+
+\title{Codeblocks in \LaTeX}
+\author{Lothar Rubusch}
+\date{2006-10-13}
+
+\begin{document}
+\maketitle
+
+\section{Code in Text}
+Bla bla bla bla bla bla bla bla \lstinline|System.out.println("hello world")| bla bla bla bla bla bla bla bla.
+\newline
+
+\section{Codeblock}
+\begin{lstlisting}[caption=Example]{Name}
+public class Hello{
+	public void Hello(){
+		System.out.println( "hello world");
+	}
+	public static void main(String[] args){
+		Hello inst = new Hello();
+	}
+};
+\end{lstlisting}
+Shows a block with linenumbers.
+\newline
+
+\section{Extern Code}
+Decoment this section and use a valid Filename.
+%\lstinputlisting[frame=single,label=Example,caption=A Simple Example]{Example.java}
+
+\end{document}

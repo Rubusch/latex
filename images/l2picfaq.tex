@@ -1,0 +1,770 @@
+% l2picfaq.tex
+%
+% (c) 2005,2006 by Dominik Bischoff.
+% steht unter der "GNU free documentation license 1.2"
+% Diese ist (falls nicht mitgeliefert) zu finden auf:
+% 
+% http://www.gnu.org/licenses/fdl.txt
+%
+% Übersicht und Codebeispiele für die im Zusammenhang mit Bildern
+% und LaTeX am häufigsten auftauchenden Probleme
+%
+%
+% Zum kompilieren: Es werden die Koma-Script-Klassen benötigt:
+% Dokumentation: scrguide.pdf (zu finden bspw. auf www.ctan.org) 
+
+
+
+\documentclass[a4paper,12pt,DIV1]{scrartcl}
+%\documentclass[a4paper,12pt,DIV1,draft]{scrartcl}
+
+
+%+++Pakete Laden +++++++++++++++++++++++++++++++++++++++++++++++++++++
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+% \usepackage[latin1]{inputenc} oder utf8 unter Linux verwenden
+
+%\usepackage{palatino}
+\usepackage{mathpazo}
+
+\usepackage{listings}
+					
+
+
+%+++Kopf- und Fusszeilen++++++++++++++++++++++++++++++++++++++++++++++
+\usepackage{scrpage2}
+						
+\newcommand{\version}{Version 1.10 vom \today}
+
+% Manuelle Korrektur einiger nicht passender Zeilenumbrüche.
+% Das Kommando kann bei der nächsten Version aus dem Text
+% mittels "suchen" gelöscht werden.
+\newcommand{\komischerSeitenumbruch}{\clearpage}
+
+\ihead{Bilder - \LaTeX~ How-To (l2picfaq.pdf)}
+\chead{}
+\ohead{Seite \thepage}
+\ifoot{(c) 2005 (06) by Dominik Bischoff}
+\cfoot{}
+\ofoot{\version}
+% nützlich: \pagemark = Seitenzahl
+
+\setheadsepline{1pt}						%Dicke der Trennlinie Kopfzeile - Text
+\setfootsepline{0.5pt}					%Dicke der Trennlinie Fusszeile - Text
+
+\pagestyle{scrheadings}					
+%+++Ende Kopf- und Fusszeile +++++++++++++++++++++++++++++++++++++++++
+\setlength{\headheight}{3.5\baselineskip}
+% Abstände bei itemize-Umbgebung zwischen den Punkten
+% um einzelne zu ändern: 
+% \begin{itemize}\itemsep0pt
+\let\origitemize\itemize
+\def\itemize{\origitemize\itemsep0pt}
+% selbiges für enumerate
+\let\origenumerate\enumerate
+\def\enumerate{\origenumerate\itemsep0.1em}
+
+
+%+++Einige Einstellungen +++++++++++++++++++++++++++++++++++++++++++++
+\usepackage{setspace}
+\onehalfspacing
+
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.4em}			
+\usepackage[%linktocpage,%
+colorlinks,% 
+linkcolor=black,%
+bookmarks,%
+bookmarksopen,%
+urlcolor=black,%
+%bookmarksnumbered,%
+final]{hyperref} 
+
+
+
+
+
+
+%+++Hier beginnt das eigenliche Dokument++++++++++++++++++++++++++++++
+\begin{document}
+
+%---Noch ein paar Einstellungen --------------------------------------
+\lstset{numbers=none,numberstyle=\tiny,numbersep=5pt,tabsize=3,breaklines=true,aboveskip=1.1em,belowskip=0.4em}
+\lstset{basicstyle=\small\ttfamily,frameround=tttt,columns=fullflexible}
+
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty = 10000
+
+
+
+
+%---Titelseite--------------------------------------------------------
+\begin{titlepage}
+\vspace*{0cm}
+\begin{center}
+\textbf{\Huge Bilder einfügen in \LaTeX: Ein How--To \normalfont}\\\vspace{2cm}
+\newcommand{\fboxseptemp}{\fboxsep}
+\setlength{\fboxsep}{1em}
+\fbox{\begin{minipage}{13cm}\small
+Copyright (c)  2005,2006 by \textbf{Dominik Bischoff}.\\
+      Permission is granted to copy, distribute and/or modify this document
+      under the terms of the \textbf{GNU Free Documentation License, Version 1.2}
+      or any later version published by the Free Software Foundation;
+      with no Invariant Sections, no Front--Cover Texts, and no Back--Cover
+	 		Texts.  A copy of the license is included in the section entitled "`GNU
+      Free Documentation License"'.
+\end{minipage}}\\\vspace{2cm}
+\setlength{\fboxsep}{\fboxseptemp}
+
+Ohne die folgenden (alphabetisch geordneten) Personen wäre dieses Dokument in der hier sichtbaren Form nie zu Stande gekommen. Ich möchte mich bei allen für Tipps, Tricks und Korrekturen herzlich \textbf{bedanken}:\\[1em]
+Atranis, cookie170, countbela666, daswaldhorn (Carsten Gerlach), edico, etilli33, Frank Küster, Herbert Voss, iii, Markus Kohm, pospiech (Matthias Pospiech), rais (Rainer Schnaack), Reiner Steib, red.iceman, Roland Geiger, Salnic, Ulrike Fischer, Uwe Siart\\[1cm]
+
+(Wer möchte, dass neben / anstatt seinem Nick hier sein richtiger Name steht, soll sich bitte bei mir melden.)						
+
+\vfill
+\hrule
+\vspace{0.5cm}
+\version
+
+\end{center}
+
+\end{titlepage} 					
+
+
+%---Inhaltsverzeichnis-----------------------------------------------------------------------------
+\tableofcontents
+\newpage 												
+
+
+%---Text--------------------------------------------------------------------------------------------
+\section{Vorwort: Zu diesem Dokument}
+Im \LaTeX--Board des Forums \url{www.mrunix.de} wurden immer wieder die selben Fragen zum Themengebiet Bilder gestellt. Es wurde immer wieder von den selben vermeintlichen Problemen berichtet. Auf die Idee von Benutzer \texttt{etilli33} hin ist dieses Bilder How--To entstanden, welches folgenden Ansprüchen gerecht werden soll:
+\begin{enumerate}
+	\item Möglichst umfassend, so dass viele Problembereiche abgedeckt werden. Es ist allerdings nicht das Ziel, alle Pakete komplett vorzustellen -- hierfür existieren die Paketdokumentationen.
+	\item Möglichst kurz, um praxistauglich zu sein. Möglichst viele Codebeispiele.
+	\item Für \LaTeX--Anfänger verständlich. 
+\end{enumerate}
+Das es nicht "`die ideale Lösung"' gibt, bin ich jederzeit für Änderungsvorschläge und Ergänzungen offen. 
+
+Mail an: \url{walfisch@herr-der-mails.de}
+
+Aktuelle Version des Dokumentes zu finden auf:
+\begin{itemize}
+\item \url{http://www.ctan.org}
+\item \scriptsize\url{http://homepage.sunrise.ch/mysunrise/dominikbischoff/l2picfaq/l2picfaq.pdf}\normalsize\\
+("`Nightly--Build"')
+\end{itemize}
+
+\clearpage
+
+\section{Dokumentationen und Pakete}
+Sollte auf Ihrem Computer eines der hier vorgestellten Pakete nicht installiert sein, so kann dieses meist auf \url{http://www.ctan.org} gefunden werden. Selbiges gilt für die Dokumentationen zu den entsprechenden Paketen.
+
+\subsection{\texttt{epslatex.pdf}}
+Dies ist eine sehr ausführliche Dokumentation (über 100 Seiten) zu Bildern, die es momentan allerdings nur in Englisch und Französisch gibt.
+
+
+
+\section{Bilder einfügen in \LaTeX}
+
+
+
+
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+
+
+
+\subsection{Bildformate}
+
+\subsubsection{kompilieren mittels \texttt{latex}}
+Sollen Dokumente mittels des Kommandos \texttt{latex} kompiliert werden, so müssen die Grafiken entweder im \texttt{*.eps} oder im \texttt{*.ps} --Format vorliegen. Folgendes Minimalbeispiel zeigt ein Bild an:
+
+\begin{lstlisting}[frame=single]
+\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+
+\includegraphics{Bild}	
+
+\end{document}
+\end{lstlisting}
+
+Hierbei ist folgendes zu beachten: Die Bilddatei muss entweder \texttt{Bild.eps} oder \texttt{Bild.ps} heissen. Weiter sollte die Bilddatei im selben Ordner liegen, wie die zu kompilierende \LaTeX--Datei oder in einem Unterordner (vergleiche Abschnitt \ref{subsubsec:unterordner}). Schliesslich kann sie noch in einem beliebigen Ordner der Variable \texttt{\$TEXINPUTS} liegen, auf welche in diesem Dokument allerdings nicht näher eingegangen wird. Dabei unterscheidet \LaTeX~ zwischen Gross-- und Kleinschreibung im Dateinamen!
+
+\textbf{Achtung}: In Ausnahmefällen kann es passieren, dass mit oben genanntem Code Fehler auftreten. In diesem Fall muss zusätzlich ein Treiber für das Paket \texttt{graphicx} geladen werden. Die erste Zeile wird folgendermassen abgeändert:
+
+\verb|\usepackage[dvips]{graphicx}|
+
+Dies sollte jedoch im Normalfall nicht nötig sein und auch \textbf{nicht} gemacht werden! 
+
+\textbf{Achtung}: Leerzeichen im Dateinamen führen zu Fehlermeldungen!
+
+
+
+\subsubsection{kompilieren mittels \texttt{pdflatex}}
+Sollen die \LaTeX--Files mittels \texttt{pdflatex} kompiliert werden, so müssen die Bilddateien entweder als \texttt{*.pdf}, \texttt{*.png} oder als \texttt{*.jpg} vorliegen.
+
+Zur Frage der Formatwahl:%
+\begin{enumerate}
+	\item Als Faustregel gilt: Falls die Grafik in einem der erwähnten Format vorliegt, sollte sie so belassen werden.
+	\item Für Zeichnungen bietet sich \texttt{pdf} an, da dieses ein Vektorgrafikformat ist.
+	\item Für Fotos bietet sich \texttt{jpg} aufgrund der Dateigrösse an.
+	\item Für Bilder allgemeiner Art sollte \texttt{png} verwendet werden, da dieses verlustlos komprimiert.
+\end{enumerate}
+
+Es kann wiederum das selbe Minimalbeispiel verwendet werden:
+\begin{lstlisting}[frame=single]
+\documentclass{article}
+\usepackage{graphicx}
+\begin{document}
+
+\includegraphics{Bild}	
+
+\end{document}
+\end{lstlisting}
+
+In diesem Fall muss die Bilddatei allerdings \texttt{Bild.jpg}, \texttt{Bild.png} oder eben \texttt{Bild.pdf} heissen und sollte wiederum im selben Ordner wie das \LaTeX--File liegen.
+
+
+\subsubsection{sowohl mit \texttt{latex} als auch mit \texttt{pdflatex} kompilieren}
+Manchmal ist es wünschenswert, das Dokument sowohl als \texttt{pdf} zu erstellen, als auch eine Druckversion im  \texttt{ps}--Format zu erzeugen. Hierzu müssen folgende drei Bedingungen erfüllt sein:
+
+\begin{enumerate}
+	\item Sämtliche Pakete müssen beide Varianten unterstützen. Dies ist beispielsweise bei \texttt{pstricks} nicht der Fall.
+	\item Sämtliche Bilder müssen sowohl als \texttt{eps} / \texttt{ps} als auch als \texttt{jpg} / \texttt{png} / \texttt{pdf} vorhanden sein und in beiden Varianten gleich heissen.
+	\item Sämtliche Bilddateien müssen in \LaTeX~ ohne Dateiendung eingebunden werden.
+\end{enumerate}
+
+
+\subsubsection{Bilder in Unterordnern}
+\label{subsubsec:unterordner}
+Oftmals ist es sinnvoll, Bilder nicht im selben Ordner wie die \LaTeX--Datei zu speichern. Will man beispielsweise ein Bild einfügen, welches im Unterordner \texttt{Kapitel1} liegt, so verändert sich der Aufruf folgendermassen:
+
+\begin{lstlisting}[frame=single]
+...
+\includegraphics{Kapitel1/Bild}	
+...
+\end{lstlisting}
+
+\textbf{Achtung}: Leerzeichen im Ordnernamen führen zu Fehlern!
+
+
+
+\hypertarget{lnk:BBox}{ }
+\subsubsection{Bounding--Box Probleme}
+\label{subsubsec:bbox}
+In Verbindung mit \texttt{eps}--Grafikdateien erscheint oftmals folgende Fehlermeldung:
+
+\fbox{\textit{!LaTeX Error: Cannot determine size of graphic in Bild.eps (no BoundingBox)}}
+
+Die Ausgabe der Grafik im Dokument entspricht meist nicht dem erwarteten Verhalten. Es gibt folgende Lösungen für dieses Problem: 
+
+\begin{enumerate}
+\item Die \texttt{eps}--Grafik kann mittels "`Options"' --> "`EPS--CLIP"' im Programm \href{http://www.cs.wisc.edu/~ghost/gsview/}{\texttt{GhostView}} richtig zugeschnitten und neu abgespeichert werden.
+\item Die \texttt{eps}--Grafik mittels des Kommandozeilentools \texttt{eps2eps} richtig umwandeln.
+\item Das Bild mittels \verb|\includegraphics[bb=0 0 100 100]{Bild}| ins Dokument einbinden. Die richtigen Koordinaten (ersten zwei Zahlen entsprechen der linken oberen Ecke, die zweiten zwei der rechten unteren Ecke des anzuzeigenden Bildausschnittes) können in nahezu jedem \texttt{eps}--Viewer (\texttt{gv},...) erhalten werden.
+\end{enumerate}
+
+\textbf{Anmerkung:} Diese Meldung kann auch auftauchen, wenn mittels \texttt{latex} kompiliert wird, allerdings eine Bilddatei mit falschem Format eingebunden wird.
+
+
+\subsubsection{\texttt{eps}--Bilder werden falsch skaliert}
+Wird ein Bild zwar angezeigt, jedoch viel zu klein oder weit nach unten gerutscht, so besteht meist ein Problem mit der \hyperlink{lnk:BBox}{Boundig--Box}. 
+
+
+\subsubsection{\texttt{dvi}--Viewer zeigt Bilder nicht korrekt an!}
+In \texttt{dvi}--Dateien werden die Bilder nicht eingebunden, sondern lediglich verlinkt. Dies hat mehrere Konsequenzen:
+\begin{itemize}
+  \item Wird die \texttt{dvi}--Datei an eine andere Stelle kopiert, so kann die verlinkte Grafik unter Umständen nicht mehr gefunden werden.
+  \item Obwohl grosse Anstrengungen unternommen wurden, zeigen auch heute noch viele \texttt{dvi}--Viewer Grafiken fehlerhaft an. Wird die Grafik also im \texttt{dvi}--Viewer falsch angezeigt, so heisst dies noch lange nicht, dass der verwendete Code falsch ist. Zur Kontrolle kann eine \texttt{pdf}-- oder \texttt{ps}--Datei erstellt werden. Um alle Zweifel aus der Welt zu räumen, kann diese danach auch noch ausgedruckt werden.
+  \item \texttt{dvi} ist folglich ein Arbeitsformat (schnell,...), welches allerdings nicht für die Endausgabe verwendet werden sollte!
+\end{itemize}
+
+
+
+
+\subsubsection{\texttt{pdf} erstellen mit enthaltenem \texttt{ps}--Code}
+Eines vorweg: Diese Methode kann zwar auch verwendet werden, um \texttt{eps}--Grafiken in ein \texttt{pdf}--Dokument einzufügen. In diesem Fall ist es aber schlauer, wenn die Grafik einmal ins \texttt{pdf}--Format konvertiert wird und nachher direkt verwendet wird!
+
+Falls aber Post--Script--Pakete wie \texttt{pstricks} in einem \texttt{pdf}--Dokument verwendet werden sollen, kann diese Lösung verwendet werden:
+
+\begin{lstlisting}[frame=single]
+\usepackage{graphicx}
+\usepackage{pst-pdf}
+...
+\begin{document}
+...
+\begin{postscript} pstricks-code \end{postscript}
+...
+\end{lstlisting}
+
+Dabei ist zu beachten, dass bei dieser Paketkonfiguration speziell kompiliert werden muss:
+
+\begin{lstlisting}[frame=single]
+pdflatex Dokument.tex
+  latex Dokument.tex
+  dvips -o Dokument-pics.ps Dokument.dvi
+  ps2pdf Dokument-pics.ps
+pdflatex Dokument.tex
+\end{lstlisting}
+
+Erklärung: Die eingerückten Zeilen sorgen dafür, dass der \texttt{Post--Script}--Code in einer extra Datei gespeichert wird, aus welcher er anschliessend von \texttt{pdflatex} verwendet wird.
+
+Es existieren auch Scripte, welche diese Schritte automatisieren. Für diverse Betriebssysteme findet man diese hier:
+
+\scriptsize \url{ftp://dante.ctan.org/tex-archive/graphics/pstricks/contrib/pst-pdf/scripts/}\normalsize
+
+
+
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+
+
+
+\clearpage
+\subsection{Konvertierungstools}
+Es folgt eine Übersicht verschiedener Tools, welche Bilddateien in ein anderes Format konvertieren können. Diese sind für viele Betriebssysteme im Internet zu finden.
+
+\subsubsection{\texttt{pdf} --> \texttt{ps} / \texttt{eps}}
+Für diesen Fall bieten sich die beiden Kommandozeilentools \texttt{pdftops} und \texttt{pdf2ps} an. Übergibt man an \texttt{pdftops} zusätzlich die Option \verb|-eps|, so lassen sich damit auch \texttt{eps}--Dateien erstellen.
+
+\subsubsection{\texttt{ps} --> \texttt{pdf}}
+Dafür ist das Kommandozeilentool \texttt{ps2pdf} zu gebrauchen.
+
+\subsubsection{\texttt{eps} --> \texttt{pdf}}
+Auch dafür gibt es zwei Kommandozeilentools: \texttt{eps2pdf} und \texttt{epstopdf}
+
+\subsubsection{\texttt{jpg} --> \texttt{ps} / \texttt{eps}}
+Hier existiert das Kommandozeilentool \texttt{jpeg2ps}.
+
+\subsubsection{\texttt{ps} --> \texttt{eps}}
+Hierzu kann das Kommandozeilentool \texttt{ps2eps} verwendet werden.
+
+\subsubsection{beliebig --> \texttt{ps}}
+Möchte man aus einem beliebigen Programm heraus etwas identisch in sein \LaTeX--Dokument übernehmen, so führt der einfachste Weg über die Installation eines Treibers von einem postscriptfähigen Drucker. Geeignete Geräte sind alle etwas teureren Laserdrucker. Die Treiber können entweder übers Internet heruntergeladen oder oftmals sogar bereits auf dem Computer gefunden werden.
+
+Danach kann im Normalfall über das Drucken--Menü in jedem Programm mit diesem neu installieren ("`virtuellen"') Drucker in eine \texttt{ps}--Datei gedruckt werden. Anschliessend muss noch die \hyperlink{lnk:BBox}{Bounding--Box} anpasst werden oder die Grafik direkt nach \texttt{pdf} konvertiert werden. Schon besitzt man ein qualitativ hochstehendes Bild!
+
+\subsubsection{Multitalente}
+Neben diversen Grafikprogrammen sind \texttt{The Gimp} mit grafischer Benutzer\-oberfläche und das Kommandozeilentool \texttt{imagemagick} sehr zu empfehlen. Beide sind opensource und beherrschen eine Vielzahl von Formaten.
+
+
+\subsubsection{Probleme mit \texttt{eps}--Dateien}
+Die Hauptprobleme äussern sich meist in riesigen Dateien oder Kompilierungsfehlern. Es gibt verschiedene Lösungsansätze, welche allerdings nicht immer zum Erfolg führen:
+\begin{itemize}
+  \item Kommandozeilentool \texttt{eps2eps}
+  \item Grafik zuerst mit \texttt{epstopdf} gefolgt von \texttt{pdftoeps} umwandeln
+\end{itemize}
+
+Will man Speicherplatz sparen, so bietet es sich an, die \texttt{eps}--Dateien zusätzlich noch zu komprimieren: Hierzu kann ein Programm nach Wahl verwendet werden, einzige Bedingung ist, dass es das Format \texttt{.gz} (sprich: "`GeZip"') versteht. Da aus dieser komprimierten Datei die Bounding--Box nicht mehr korrekt ausgelesen werden kann, muss diese explizit angegeben werden.
+
+\begin{lstlisting}[frame=single]
+% ursprüngliche Datei: bild.eps
+% komprimierte Datei: bild.eps.gz
+\usepackage{graphicx}
+...
+\begin{document}
+...
+\begin{figure}[htb]
+  \centering
+    \includegraphics[bb=0 0 113 113]{Bild}
+  \caption{Bildunterschrift}
+\end{figure}
+\end{lstlisting}
+
+Für die korrekte Wahl der Bounding--Box siehe Abschnitt \ref{subsubsec:bbox}.
+
+
+
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+
+
+\clearpage
+\subsection{Bilder manipulieren}
+
+\subsubsection{Bilder skalieren}
+Um die Grösse eines Bildes anzupassen, bieten sich folgende Kommandos an:
+
+\begin{lstlisting}[frame=single]
+\includegraphics[width=4cm]{Bild}
+\includegraphics[height=4cm]{Bild}
+\includegraphics[width=0.8\linewidth]{Bild}
+\includegraphics[scale=0.5]{Bild}
+\end{lstlisting}
+
+Die ersten beiden Kommandos skalieren das Bild proportional auf  eine feste Breite beziehungsweise eine feste Höhe. Das dritte Kommando skaliert die Grafik abhängig von der Zeilenlänge; In diesem Fall auf 80\% einer Textzeile. Viertes Kommando skaliert das Bild auf die Hälfte der ursprünglichen Grösse.
+
+
+\subsubsection{Bilder drehen}
+Bilder können mittels \LaTeX~ auch gedreht werden. Dies geschieht mit dem Kommando:
+
+\begin{lstlisting}[frame=single]	
+\includegraphics[angle={90}]{Bild}
+\end{lstlisting}
+
+Hierbei wird das Bild um 90 Grad im Gegenuhrzeigersinn gedreht.
+
+
+\subsubsection{gemischte Kommandos}
+
+Selbstverständlich können eben genannte Kommandos auch gemischt werden. Dabei ist zu beachten, dass die Kommandos in der Reihenfolge ausgeführt werden, wie sie im Quellcode stehen! Wird beispielsweise zuerst gedreht und danach auf eine gewisse Breite skaliert, so ist dies nicht das selbe, wie wenn zuerst auf diese Breite skaliert und danach gedreht wird: Die Breite der ersten Variante entspricht im zweiten Fall der Höhe!
+
+
+
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+
+
+\clearpage
+\subsection{Bilderumgebungen}
+
+\subsubsection{Bild an aktueller Stelle einfügen}
+Eines der häufigsten Problem betrifft Bilder, welche genau an der aktuellen Stelle einfügt werden sollen. Falls \texttt{figure} verwendet wird, funktioniert folgender Code meistens:
+
+\begin{lstlisting}[frame=single]
+...
+\begin{figure}[!htb]
+	\includegraphics{Bild}%	
+	\caption{Bildunterschrift}%
+\end{figure}
+...
+\end{lstlisting}
+
+\LaTeX~ versucht dabei das Bild unter allen Umständen an der aktuellen Stelle zu platzieren. Dies kann jedoch manchmal unmöglich sein.
+
+Um ein Bild ohne Bildunterschrift und somit auch ohne Eintrag ins Abbildungsverzeichnis einzubinden, kann das bereits mehrmals genannte Kommando verwendet werden:
+
+\begin{lstlisting}[frame=single]
+...
+\includegraphics{Bild}
+...
+\end{lstlisting}
+
+Soll das Bild allerdings eine Bildunterschrift erhalten, jedoch trotzdem immer an aktueller Stelle erscheinen, s bietet sich das Paket \texttt{caption} an:
+
+\begin{lstlisting}[frame=single]
+\usepackage{caption}
+...
+\begin{minipage}{\linewidth}
+	\begin{center}
+		\includegraphics{Bild}%
+		\captionof{figure}[kurze Bildunterschrift]{Bildunterschrift}%
+	\end{center}
+\end{minipage}
+...
+\end{lstlisting}
+
+Anmerkung: Diese Methode kann auch verwendet werden, um Bilder in einer Tabelle mit einer Bildunterschrift zu versehen.
+
+Anmerkung: Das selbe Paket kann auch für Tabellen verwendet werden, um die \texttt{table}--Umgebung zu vermeiden und Tabellen an aktueller Stelle ins Dokument einzufügen: Der Befehl lautet dann: 
+
+\verb|\captionof{table}{Beschreibung}|.
+
+
+\subsubsection{Bilder gleiten lassen}
+\texttt{figure} versucht, Grafiken passend auf den Text zu verteilen, wobei die Präferenzen des Autors wenn möglich beachtet werden. Passend heisst für \LaTeX: Wenn möglich keine riesigen Lücken entstehen lassen. Folgender Code fügt ein Bild ein und platziert es in folgender Reihenfolge: \textbf{h}ere - \textbf{t}op - \textbf{b}ottom.
+
+\begin{lstlisting}[frame=single]
+...
+\begin{figure}[htb]
+	\centering%
+	\includegraphics{Bild}%
+	\caption{Hier steht die Beschreibung des Bildes}%
+\end{figure}
+...
+\end{lstlisting}
+
+Sollen unbedingt noch alle Abbildungen vor der neuen Seite (beispielsweise einem neuen Kapitel) erscheinen, so existieren zwei Ansätze:
+
+Seitenumbruch erwünscht: Kommandos \verb|\clearpage| , \verb|\cleardoublepage|
+
+Seitenumbruch nicht erwünscht: Das Paket \texttt{placeins} bietet hier die Lösung.
+
+\komischerSeitenumbruch
+\begin{lstlisting}[frame=single]
+\usepackage{placeins}
+...
+%hier diverse figures
+\FloatBarrier
+...
+\end{lstlisting}
+
+Hierbei werden alle gleitenden Grafiken, welche im Quelltext vor diesem Kommando eingefügt werden, spätestens an dieser Stelle angezeigt.
+
+
+
+\subsubsection{textumflossene Bilder}
+Soll Text um Bilder herumfliessen, so bietet sich das \texttt{wrapfig}--Paket an. 
+
+\textbf{ACHTUNG:} \texttt{wrapfig} verursacht oftmals Probleme, wenn viele Bilder auf einer Seite platziert werden oder wenn auf der gleichen Seite Fliessumgebungen (\texttt{float}, \texttt{table}) vorhanden sind.
+
+\begin{lstlisting}[frame=single]
+\usepackage{wrapfig}
+...
+\begin{wrapfigure}{r}{5cm}
+	\centering%
+	\includegraphics{Bild}%
+	\caption{Hier steht die Beschreibung des Bildes}%
+\end{wrapfigure}
+...
+\end{lstlisting}
+
+Anstatt eines \texttt{r} (für rechts) kann man auch ein \texttt{l} nehmen, um Bilder am linken Seitenrand zu auszurichten. Die \texttt{5cm} sind die gewünschte Breite der \texttt{wrapfigure}.
+
+Verwendet man anstatt dem kleinen \texttt{r} ein grosses \texttt{R}, so erlaubt man der Abbildung zusätzlich noch zu gleiten. Analog verhält es sich mit \texttt{l} und \texttt{L}.
+
+Sollte das Paket \texttt{wrapfig} nicht die erwünschten Erfolge bringen, so kann das Paket \texttt{picins} ausprobiert werden, welches ähnliche Funktionen bereitstellt.
+
+
+
+
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+%---------------------------------------------------------------------------
+
+\clearpage
+\subsection{Spezielles}
+\subsubsection{Rahmen}
+Um ein Bild einzurahmen, kann das Kommando \texttt{fbox} verwendet werden. Damit nicht unnötige Leerzeilen eingefügt werden, sollte nach jeder Zeile ein Prozentzeichen stehen:
+
+\begin{lstlisting}[frame=single]
+...
+\begin{figure}[htb]
+  \fbox{\begin{minipage}{6cm}%
+  	\begin{center}%
+    	\includegraphics[width=5cm]{Bild}%
+    	\caption{Hier steht die Beschreibung des Bildes}%
+  	\end{center}%
+  \end{minipage}}%  
+\end{figure}
+...
+\end{lstlisting}
+
+Dabei ist zu beachten, dass die Breite der \texttt{minipage} grösser gewählt werden muss, als die Breite des Bildes.
+
+Alternativ kann für farbige Ränder das Kommando \texttt{fcolorbox} verwendet werden.
+
+\textbf{Achtung}: Ränder um Abbildungen wirken oftmals \textbf{unprofessionell}. Daher sollte man zuerst gut überlegen, ob man tatsächlich Ränder haben möchte.
+
+
+\subsubsection{kurze Bildunterschriften im Abbildungsverzeichnis}
+Lange Bildunterschriften sehen im Abbildungsverzeichnis meist schlecht aus. Es gibt daher die Möglichkeit, neben einer ausführlichen Bildunterschrift für den Text einen weiteren kurzen Bildtitel fürs Abbildungsverzeichnis zu erstellen:
+
+\komischerSeitenumbruch
+\begin{lstlisting}[frame=single]
+...
+\begin{figure}[htb]
+	\centering%
+	\includegraphics{Bild}%
+	\caption[Verzeichniseintrag]{Beschreibung}%
+\end{figure}
+...
+\listoffigures
+\end{lstlisting}
+
+
+
+\subsubsection{Verweise auf Bilder}
+\begin{lstlisting}[frame=single]
+...
+\begin{figure}[htb]
+	\centering%
+	\includegraphics{Bild}%
+	\caption{Titel}%
+	\label{pic:DasBild}%
+\end{figure}
+...
+Bild~\ref{pic:DasBild} zeigt ...
+\end{lstlisting}
+
+\textbf{ACHTUNG:} Immer zuerst \texttt{caption} und danach erst \texttt{label}! Wird dies nicht beachtet, so stimmen die Verweise auf die Bilder nicht mit den Bildnummern überein.
+
+Anmerkung: Die Tilde in der letzten Zeile sorgt dafür, dass an dieser Stelle nicht umbrochen wird und dass der Abstand konstant bleibt.
+
+
+\subsubsection{Klicklinks im \texttt{pdf}}
+Das Paket \texttt{hyperref} erzeugt Links auf die Bildunterschriften. Normalerweise möchte man aber nicht die Bildunterschrift, sondern das Bild selbst verlinken. Hierzu muss das Paket \texttt{hypcap} geladen werden:
+
+\begin{lstlisting}[frame=single]
+...
+\usepackage[Einstellungen]{hyperref} 
+\usepackage[all]{hypcap}
+\begin{document}
+...
+Hier folgt das Bild
+\end{lstlisting}
+
+Zu beachten: Diese beiden Pakete sollten unbedingt in dieser Reihenfolge nach allen anderen Paketen geladen werden.
+
+
+\subsubsection{Bilder neben Text: Minipages}
+Um einen Text neben einem Bild zu platzieren, bietet sich folgender Trick an: 
+
+\begin{lstlisting}[frame=single]
+...
+\begin{figure}
+	\begin{minipage}{0.6\textwidth}
+		\includegraphics[width=0.5\textwidth]{Bild}%
+	\end{minipage}
+	\begin{minipage}{0.3\textwidth}
+		Hier folgt der Text...
+	\end{minipage}
+\end{figure}
+...
+\end{lstlisting}
+
+Selbstverständlich kann dem Bild auch eine Bildunterschrift verpasst werden. Ebenfalls möglich ist es, die Bildunterschrift mit dieser Methode neben dem Bild zu platzieren. Dies geschieht mittels des bereits erwähnten \texttt{captionof}--Befehls.
+
+
+\subsubsection{zwei Bilder nebeneinander}
+Hierzu bietet sich das \texttt{subfig}--Paket an:
+
+\begin{lstlisting}[frame=single]
+\usepackage{subfig}
+...
+\begin{figure}
+	\centering
+		\subfloat[Titel 1 \label{pic:Bild1}]{\includegraphics{Bild1}}
+		\hspace{1cm}
+		\subfloat[Titel 2 \label{pic:Bild2}]{\includegraphics{Bild2}}
+	\caption{Zwei Bilder: a) Bild1, b) Bild2}	
+\end{figure}
+...
+\end{lstlisting}
+
+Dieser Code erzeugt eine Gleitumgebung, welche zwei Bilder mit eigenen Titeln enthält.
+
+
+\subsubsection{mit \LaTeX~ Zeichnungen erstellen}
+Hierzu bietet sich das sehr umfangreiche Paket \texttt{pstricks} an: \url{http://tug.org/PSTricks/}
+
+
+\subsubsection{Hintergrundbilder}
+Um auf einer oder mehreren Seiten ein Hintergrundbild zu platzieren, kann das \texttt{wallpaper}--Paket verwendet werden:
+
+\begin{lstlisting}[frame=single]
+...
+\usepackage{wallpaper}
+...
+\TileWallPaper{\paperwidth}{\paperheight}{bild}
+...
+\ClearWallPaper
+...
+\ThisTileWallPaper{\paperwidth}{\paperheight}{bild}
+...
+\end{lstlisting}
+
+Mittels \texttt{TileWallPaper} wird das Hintergrundbild so lange angezeigt, bis es mittels \texttt{ClearWallPaper} wieder entfernt wird. Dieser Befehl darf NICHT auf der selben Seite stehen, auf welcher das Hintergrundbild eingefügt wurde. 
+
+Soll nur gerade auf einer Seite ein Hintergrundbild eingefügt werden, so kann der Befehl \texttt{ThisTileWallPaper} verwendet werden.
+
+
+\subsubsection{Grafiken beschriften}
+Um Grafiken mit der selben Schriftart wie im restlichen Dokument zu beschriften, kann das \texttt{overpic}--Paket verwendet werden:
+
+\begin{lstlisting}[frame=single]
+...
+\usepackage[percent]{overpic}
+\usepackage{color}
+...
+\begin{overpic}[width=10cm,grid,tics=10]{bild}
+	\put(20,30){\textcolor{white}{etwas Text}}
+\end{overpic}
+...
+\end{lstlisting}
+
+Anwendung: Anstatt \texttt{includegraphics} kann eigentlich immer auch \texttt{over\-pic} verwendet werden. Die Angaben \texttt{grid} und \texttt{tics=10} sind einzig und alleine dazu da, auf das Bild ein Raster zu zeichen, von welchem die korrekten Koordinaten für die Beschriftung abgelesen werden können. Sobald die Beschriftung an der richtigen Stelle ist, können diese beiden Argumente entfernt werden.
+
+Der \texttt{put}--Befehl fügt den eigentlichen Text ein: In diesem Fall an den Koordinaten 20 in horizontaler Richtung und 30 in vertikaler Richtung. Es ist auch möglich, ein Bild an mehreren Stellen zu beschriften. Dazu müssen lediglich mehrere \texttt{put}--Befehle hintereinander eingefügt werden. Damit die Beschriftung gut lesbar ist, empfiehlt es sich, eine passende Textfarbe zu wählen. Hierfür eignet sich das Paket \texttt{color}.
+
+
+\subsubsection{transparente Grafiken}
+Insbesonders für Bildschirmpräsentationen mit dem Paket \texttt{beamer} kann es nützlich sein, wenn gewisse Bereiche einer Grafik transparent sind. Dies kann mit dem Paket \texttt{pgf} erreicht werden. Da das Paket jedoch recht umfangreich ist, wird hier auf dessen Dokumentation verwiesen: Diese heisst \texttt{pgfmanual.pdf}.
+
+
+\subsubsection{<<Abbildung>> umbenennen}
+Das "`Abbildung"' in der Bildunterschrift ist manchmal nicht besonders passend. Um "`Abbildung"' beispielsweise in "`Diagramm"' abzuändern, kann folgender Code verwendet werden:
+
+\begin{lstlisting}[frame=single]
+...
+\begin{document}
+\renewcommand{\figurename}{Diagramm}
+...
+\end{lstlisting}
+
+\subsubsection{<<Abbildungsverzeichnis>> umbenennen}
+Möchte man dem Abbildungsverzeichnis einen neuen Namen geben, so geschieht dies über folgenden Code:
+\komischerSeitenumbruch
+\begin{lstlisting}[frame=single]
+...
+\begin{document}
+\renewcommand{\listfigurename}{Bilderverzeichnis}
+...
+\end{lstlisting}
+
+Die betreffenden Schlüsselwörter sind jeweils in der geladenen Sprachdefinition zu finden -- also beispielsweise in \texttt{ngerman.sty}.
+
+
+
+
+
+\clearpage
+
+\section{GNU Free Documentation License}
+
+\tiny
+\input{gfdl}
+
+\section{History}
+\normalsize
+In nahezu jeder neuen Version wurden einige Tippfehler behoben. Diese sind nicht explizit angegeben.
+
+\small
+\begin{itemize}
+\item 23.07.2006: Korrekte Übersetzung von "`float"' lautet "`gleiten"'.\\
+\texttt{epslatex.pdf} hinzugefügt.\\
+Codeschnipsel bei den Grundbeispielen durch voll funktionsfähige Minimalbeispiele ersetzt.\\
+Reihenfolge im Kapitel "`Bilder einfügen in \LaTeX"' geändert.\\
+Abschnitt \texttt[dvips] umformuliert.\\
+Umformulierung Abschnitt "`kompilieren mittels \texttt{latex}"'\\
+Umformulierung Abschnitt "`Bounding--Box"'\\
+Abschnitt "`\texttt{dvi}--Viewer"' vollständig umformuliert.\\
+Beispiel "`Rahmen um Bild"' wurde korrigiert.\\
+Bei Verwendung von \texttt{minipage} sollte \verb|\begin{center}| verwendet werden (anstatt \verb|\centering|), da sonst die Abstände nicht stimmen (wurde korrigiert).\\
+Neuer Abschnitt "`Probleme mit \texttt{eps}--Dateien"' (1.10)
+\item 05.07.2006: Vollständig überarbeitet (Tippfehler, unpassende Formulierungen, Textsatz, ...). \texttt{overpic} (1.00)
+\item 27.06.2006: Neuer Abschnitt "`Probleme mit \texttt{hyperref}"' (0.58)
+\item 27.05.2006: Druckfehler behoben. (0.57)
+\item 25.05.2006: Erweiterung des Abschnittes \texttt{pst--pdf}. Beispiel zum Paket \texttt{float} wurde entfernt: Normale \texttt{figure}'s funktionieren auch ohne dieses Paket und \texttt{!htb} funktioniert im Normalfall besser als die Option \texttt{H}. \texttt{wrapfig} um Optionen \texttt{R} und \texttt{L} ergänzt. (0.56)
+\item 02.05.2006: Paket \texttt{subfigure} in aktuelleres \texttt{subfig} geändert. \texttt{capt--of} durch \texttt{caption} ersetzt. \texttt{pst--pdf}. \texttt{ps2eps}. \texttt{picins}. \texttt{pgf}. (0.55)
+\item 02.05.2006:	Hintergrundbild, Abschnitt "`fehlende Pakete"' (0.54)
+\item 31.03.2006:	Paket \texttt{caption} (0.53)
+\item 06.02.2006: Gemischte Kommandos (0.52)
+\item 03.02.2006: Einige Fehler behoben (0.51)
+\item 02.02.2006: Diverse Fehler behoben, überarbeitet (0.5)
+\item 02.02.2006: Paket \texttt{placeins} hinzugefügt (0.44)
+\item 24.01.2006: Befehl \texttt{clearpage} hinzugefügt (0.43)
+\item 13.01.2006: Verweise auf Bilder konkretisiert (0.42)
+\item 06.12.2005: Fehler im Abschnitt \texttt{wrapfig} behoben (0.41)
+\item 04.12.2005: Falsche Skalierung von \texttt{eps} und Skalierungstools (0.4)
+\item 03.11.2005: Beispiel Verlinken verbessert (0.31)
+\item 23.10.2005: Mehrere Bilder nebeneinander (0.3)
+\item 18.10.2005: Abbildungsverzeichnis und Abbildung umbenennen (0.2)
+\item 16.10.2005: Erste Version (0.1)
+\end{itemize}
+
+\end{document}

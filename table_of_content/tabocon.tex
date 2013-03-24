@@ -1,0 +1,104 @@
+\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[utf-8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+
+% index
+\usepackage{makeidx}% .idx file compiled seperately!!!
+\makeindex
+
+%Formelverzeichnis
+\usepackage{float}
+\newfloat{formel}{H}{for}
+\floatname{formel}{Formel}
+
+
+% make title content
+\title{Document using Various Indexes}
+\author{Lothar Rubusch}
+\date{1. November 2006}
+
+\begin{document}
+\maketitle
+
+% Talbe of contents
+\tableofcontents 
+
+% no indent at line start
+\parindent0mm
+\pagebreak
+
+\section{Table}
+Sone text before a table.
+\begin{center}
+% use packages: array
+\begin{table}[h]
+\begin{tabular}{lll}
+x & x & x\\
+x & \cite{BLA} & \cite[foobie page 666]{HEY}\\
+x & x & x\\
+\end{tabular}
+\caption{some caption text for the table}
+\label{tab:label}
+\end{table}
+\end{center}
+Here is some text after the table.
+\pagebreak
+
+
+\section{Image}
+Here comes some image.
+\begin{figure}[h]
+ \centering
+ \includegraphics[bb=14 14 65 65]{img.eps}
+ % img.eps: 2147483647x2147483647 pixel, 300dpi, 18182028.00x18182028.00 cm, bb=14 14 65 65
+ \caption{some caption text for the image}
+ \label{fig:label}
+\end{figure}
+This was one image (\ref{fig:label}).
+\pagebreak
+
+
+\section{Textindex}
+Using Kile to do the the index:
+\begin{enumerate}
+ \item Make the index\footnote{The indexes need to be compiled seperately - this will need index file.}: Latex - Tables and Lists - Generate index \index{makeindex}
+ \item Generate an empty File tabocon.idx (use the name of the project) \index{index.idx}
+ \item Generate the index: Build - Compile - Makeindex \index{generate the index}
+\end{enumerate}
+
+\section{Formeln}
+A formula...
+\begin{formel}
+\[
+\overline{T}=\sum_{i=1}^{n}\frac{T_i}{n}
+\]
+\label{equ:mean}
+\caption{Formula and text}
+\end{formel}
+...for something: \ref{equ:mean}.
+
+% the index
+\printindex
+
+% figure index
+\listoffigures
+
+% Table index
+\listoftables
+
+% list of formulas
+\listof{formel}{Formulaz}
+
+
+% bibliography
+\begin{thebibliography}{99}
+	\bibitem{BLA} blabla
+	\bibitem[HEY]{HEY} heyhey
+
+
+\end{thebibliography}
+
+\end{document}

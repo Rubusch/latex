@@ -1,0 +1,44 @@
+--- DEUTSCH -----------------------------------------
+
+Bilder-HowTo fuer LaTeX (l2picfaq.pdf):
+
+Beinhaltet die haeufigsten Fragen und Antworten, die im Zusammenhang
+mit LaTeX und Abbildungen / Grafiken / Bildern / Fotos / Zeichnungen ...
+auftreten. Zu jedem Problem gibt es ein kurzes Codebeispiel als Loesung,
+dessen Funktion erklaert wird. Ebenfalls wird auf Stolpersteine hingeweisen.
+
+l2picfaq.pdf :	Das Bilder-HowTo
+l2picfaq.tex :  Der dazugehoerende Source-Code
+gfdl.tex     :  Die GNU Free Documentation License. Wird zum 
+                Kompilieren von l2picfaq.tex benoetigt
+README       :  Dieses File hier
+
+
+Das Dokument steht unter der GNU free documentation license.
+
+Erstellt und betreut: Dominik Bischoff (2005,2006)
+
+Änderungsvorschlaege und Kommentare jederzeit erwuenscht:
+
+Kontakt: walfisch at herr-der-mails.de
+
+
+
+--- ENGLISH -----------------------------------------
+
+German collection of problems and solutions about LaTeX and
+pictures / graphics / photos / sketshes / drawings...
+
+l2picfaq.pdf :	the LaTeX picture-How-To
+l2picfaq.tex :  the source code
+gfdl.tex     :  the GNU Free Documentation License. Is needed 
+                to compile l2picfaq.tex 
+README       :  this file here
+
+This document is published under the GNU free documentation license.
+
+Built and maintained by: Dominik Bischoff (2005,2006)
+
+If someone wants to translate it or has suggestions or corrections:
+
+mail to: walfisch at herr-der-mails.de

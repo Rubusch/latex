@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+
+
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"><title>LaTeX Margins</title>
+
+<style type="text/css" media="all">@import "/templates/main.css";</style></head><body>
+
+
+<!-- The div class=hide is used so that folks with text-only or PDA
+browsers can easily skip the header and navigation bar so it isn't an
+annoyance. --> 
+
+<div class="hide"> <a href="#content" title="Skip
+Navigation." accesskey="k">S<em>k</em>ip Navigation.</a></div>
+
+<div id="Header"><a href="http://web.image.ufl.edu/">
+<img src="margins_files/header2.gif" alt="IMAGE Lab" height="103" width="498"></a>
+
+<div class="top_right">
+  <a href="http://www.ufl.edu/">University of Florida</a> 
+      <br>
+      <a href="http://www.clas.ufl.edu/">College of Liberal Arts &amp; Sciences</a> 
+   
+  </div>
+
+</div>
+
+
+<div id="Menu">
+<a href="http://web.image.ufl.edu/policies/about.shtml" accesskey="a"><strong><em>A</em>bout</strong></a><br>
+<br>
+<a href="http://web.image.ufl.edu/schedule.shtml" accesskey="c">
+<strong>S<em>c</em>hedule</strong>
+</a>
+<br>
+<br>
+<a href="http://web.image.ufl.edu/policies/access.shtml" accesskey="i">
+<strong>Enable <em>I</em>MAGE Access</strong>
+</a>
+<br>
+<br>
+<a href="http://web.image.ufl.edu/equipment.shtml" accesskey="u">
+<strong>Eq<em>u</em>ipment</strong>
+</a><br>
+<br>
+<a href="http://web.image.ufl.edu/help/" accesskey="h">
+<strong>Online <em>H</em>elp</strong>
+</a><br>
+<br>
+
+<form name="gs" method="get" action="http://search.ufl.edu/web">
+<input name="query" size="17" value="" maxlength="2033" type="text">
+<input value="Search" style="background-color: rgb(255, 255, 255);" name="submit" type="submit">
+<input name="site" value="www.image.ufl.edu" type="hidden">
+                       </form> 
+<br>
+<br>
+
+</div>
+
+<div id="Content"><a name="content"></a>
+	<h1>LaTeX Margins</h1>
+
+
+
+
+
+
+<p>
+Margins in LaTeX are diificult to change and manipulate because all of
+the margins are interrelated. Please read the <a href="http://www.tex.ac.uk/cgi-bin/texfaq2html?label=changemargin">CTAN
+Faq</a> on chnaging margins before attempting to use the commands
+below.
+</p>
+
+<p>
+The most reliable and easiest way to change margins on our system is
+to use the geometry package and the commands it controls. Please see
+the <a href="http://web.image.ufl.edu/help/latex/spacing.shtml">document wide spacing page</a> or below
+for those relatively simple commands.
+</p>
+<p>
+<strong>Making a Style File</strong>
+</p>
+
+<p>
+Another option, which is initially more difficult but will save time
+later, is to make a margins style file. Then, you could call that
+style file in any document you create with the command:
+\usepackage{margins}. This way, you would need to set your margins
+only once and you could call it for multiple documents and it would
+apply to the entire document. The UFThesis.cls for LaTeX includes the
+margin programming, so margins are taken care of with it. To read the
+code for setting the margins, go to the <a href="http://web.image.ufl.edu/help/latex/samples/diss/ufthesis.cls">UFThesis</a> and scroll down to the
+line "%% Page layout for UF Editorial Office %" and read on from
+there.
+</p>
+
+<p>
+<strong>Document Wide Spacing</strong> 
+</p>
+
+<p> Changing the spacing on a document-wide basis is done for
+different document settings using different packages. The sectsty
+package controls the spacing of section headings; the mdwlist package
+controls the spacing for lists; the geometry package controls the
+overall margins and text area of the document. All of these packages
+must be called in the preamble of the document and specified when
+called. For instance, the geometry package is called with the use
+package command, followed by the options, and then the package name,
+like this: <br> <strong>
+\usepackage[left=2cm,top=1cm,right=3cm,nohead,nofoot]{geometry}</strong>
+
+</p>
+
+
+
+<!--Change the margins
+                 The easiest way to change the margins in the document is to use the package anysize and its command
+                 \marginsize{left}{right}{top}{bottom}: 
+
+                 \documentclass[a4paper]{article}
+                 \usepackage{anysize}
+                 \marginsize{3cm}{2cm}{1cm}{1cm}
+                 \begin{document}
+                 Jawohl! Sommerlov!
+                 \end{document}
+
+-->
+<table bgcolor="#fffcc" cellpadding="2" cellspacing="2" width="80%">
+<tbody><tr><th>Margins on the Page</th><th>Commands to Change the Margins</th></tr>
+<tr>
+<td width="405">
+<img src="margins_files/latex_margins.gif" alt="margins for latex" height="325" width="405"><br>Image from Peter Newbury's page on LaTeX Margins: <a href="http://www.iam.ubc.ca/%7Enewbury/tex/page-set-up.html">http://www.iam.ubc.ca/~newbury/tex/page-set-up.html</a>
+</td>
+<td valign="top">
+     %%%%%%%%%%%%%
+ <br>\oddsidemargin  0.0in
+ <br>\evensidemargin 1.0in
+ <br>\textwidth      6.0in
+ <br>\headheight     1.0in
+ <br>\topmargin      0.5in
+ <br>\textheight     9.0in
+<br>\footheight      1.0in
+ <br> %%%%%%%%%%%%
+<br>(Please note that all of these are contingent on each other and that changing the margins this way is difficult.)
+</td>
+</tr>
+</tbody></table><p>
+<strong>Margin Commands</strong>
+</p><p>
+All side margins on single-sided pages are controlled with the
+\oddsidemargin command. The distance from the left side of the page to
+the left side of the text is one inch + \oddsidemargin. To set margins
+of less than 1in, set the \oddsidemargin command with a negative length
+like -0.5in. The right margin is changed by combining the
+\oddsidemargin (default of 1) with the \textwidth. Thus, if you wanted
+to have 1inch margins on the left and the right sides of the page (on
+8.5X11inch paper), you would use the commands:</p>
+<pre>\oddsidemargin 0.0in 
+%%this makes the odd side margin go to the default of 1inch
+\textwidth 6.5 
+%%sets the textwidth to 6.5, which leaves 1 for the remaining right margin with 8 1/2X11inch paper 
+</pre>
+
+<p>If you are writing a document with even and odd sided pages, then
+use the \evensidemargin command in addition to the \oddsidemargin
+command. Both commands are used within the same framework. </p>
+
+<p>
+The vertical style parameters are complicated and setting
+\topmargin=0in will not negate the top space of the page, even with no
+headers.
+</p>
+
+<p><a href="http://web.image.ufl.edu/help/latex/">Back</a>
+</p></div>
+
+
+
+
+
+
+
+
+
+<div id="footer"><p>
+<a href="http://web.image.ufl.edu/">Home</a> || <a href="http://web.image.ufl.edu/help/">IMAGE Help
+Pages</a> || <a href="http://www.nwe.ufl.edu/writing/help/">NWE Help
+Pages</a> || <a href="http://web.image.ufl.edu/help/search.shtml">Search the Help Pages</a> ||
+<a href="http://web.image.ufl.edu/contact.shtml">Contact IMAGE</a>
+
+<br>
+Updated Monday, 07-Feb-2005 11:34:53 EST
+</p>
+
+</div>
+
+</body></html>

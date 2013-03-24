@@ -1,0 +1,40 @@
+\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[utf-8]{inputenc}
+%\usepackage[ngerman]{babel} %german
+\usepackage[english]{babel} %english
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+
+\title{Main Header}
+\author{Lothar Rubusch}
+\date{\today}
+
+\begin{document}
+% write (almost) everything in sansserif font
+\sffamily
+
+% make title
+\maketitle
+
+% no indent at line start
+\parindent0mm
+
+%\section{some header}
+
+% text text text
+\cite[S.xy]{Qt06}
+
+\appendix
+
+\begin{thebibliography}{99}
+ \bibitem[Qt06]{Qt06} Blanchette, Summerfield (2006) {\em C++ GUI Programming with Qt4.1},  Prentice Hall International
+ 
+\end{thebibliography}
+
+
+
+\end{document}

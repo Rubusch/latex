@@ -1,0 +1,483 @@
+\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[utf-8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{graphicx}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+
+% for multirow command
+\usepackage{multirow}
+
+% for arrays
+\usepackage{array}
+
+% for long tables
+\usepackage{longtable}
+
+% for booktabs
+\usepackage{booktabs}
+
+\title{Table Construction}
+\author{Lothar Rubusch}
+\date{2006-10-11}
+
+\begin{document}
+% write (almost) everything in sansserif font
+\sffamily
+
+% make title
+\maketitle
+
+% no indent at line start
+\parindent0mm
+
+\section{Plain}
+\begin{tabular}{ccccccccc}
+x & x & x & x & Col & x & x & x & x \\ 
+Row & Row & Row & Row & X-ing & Row & Row & Row & Row \\ 
+x & x & x & x & Col & x & x & x & x \\ 
+x & x & x & x & Col & x & x & x & x \\ 
+x & x & x & x & Col & x & x & x & x \\ 
+\end{tabular}
+\newline
+
+
+\section{Cols}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+x & x & x & x & Col & x & x & x & x \\ 
+Row & Row & Row & Row & X-ing & Row & Row & Row & Row \\ 
+x & x & x & x & Col & x & x & x & x \\ 
+x & x & x & x & Col & x & x & x & x \\ 
+x & x & x & x & Col & x & x & x & x \\ 
+\end{tabular}
+\newline
+
+
+\section{Rows}
+\begin{tabular}{ccccccccc} \hline
+x & x & x & x & Col & x & x & x & x \\ \hline 
+Row & Row & Row & Row & X-ing & Row & Row & Row & Row \\ \hline 
+x & x & x & x & Col & x & x & x & x \\ \hline
+x & x & x & x & Col & x & x & x & x \\ \hline
+x & x & x & x & Col & x & x & x & x \\ \hline
+\end{tabular}
+\newline
+
+
+\section{Grid}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|} \hline
+x & x & x & x & Col & x & x & x & x \\ \hline 
+Row & Row & Row & Row & X-ing & Row & Row & Row & Row \\ \hline 
+x & x & x & x & Col & x & x & x & x \\ \hline
+x & x & x & x & Col & x & x & x & x \\ \hline
+x & x & x & x & Col & x & x & x & x \\ \hline
+\end{tabular}
+\newline
+
+
+\section{Header}
+\begin{tabular}{|c||cccccccc|} \hline
+x & x & x & x & Col & x & x & x & x \\ \hline \hline
+Row & Row & Row & Row & X-ing & Row & Row & Row & Row \\
+x & x & x & x & Col & x & x & x & x \\
+x & x & x & x & Col & x & x & x & x \\
+x & x & x & x & Col & x & x & x & x \\ \hline
+\end{tabular}
+\newline
+
+
+\section{Merge Cols (1)}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|} \hline
+x & x & x & x & x & x & x & x & x \\ \hline
+x & x & x & x & \multicolumn{2}{c}{Left border is static!} & x & x & x \\ \hline
+x & x & x & x & x & x & x & x & x \\ \hline
+x & x & x & x & \multicolumn{2}{|c}{Left doesn't matter!} & x & x & x \\ \hline
+x & x & x & x & x & x & x & x & x \\ \hline
+x & x & x & x & \multicolumn{2}{|c|}{Both} & x & x & x \\ \hline
+x & x & x & x & x & x & x & x & x \\ \hline
+\multicolumn{2}{c}{First left border misses!} & x & x & x & x & x & x & x \\ \hline
+x & x & x & x & x & x & x & x & x \\ \hline
+\multicolumn{2}{|c}{First left fixed!} & x & x & x & x & x & x & x \\ \hline
+x & x & x & x & x & x & x & x & x \\ \hline
+x & x & x & x & \multicolumn{2}{c|}{Right fixed, too!} & x & x & x \\ \hline
+x & x & x & x & x & x & x & x & x \\ \hline
+\end{tabular}
+\newline
+
+
+\section{Merge Cols (2)}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|} \hline
+x & x & x & x & Single Cell & x & x & x & x \\ \hline
+x & x & x & x & \multicolumn{2}{c|}{Merged Col Cell} & x & x & x \\ \hline
+x & x & x & x & \multicolumn{3}{c|}{Merged Col Cell} & x & x \\ \hline
+x & x & x & x & \multicolumn{4}{c|}{Merged Col Cell} & x \\ \hline
+x & x & x & x & \multicolumn{5}{c|}{Merged Col Cell} \\ \hline
+x & x & x & x & x & x & x & x & x \\ \hline
+x & x & x & x & \multicolumn{1}{c}{No border} & \multicolumn{1}{c}{No border} & \multicolumn{1}{c}{No border} & \multicolumn{1}{c}{No border} & \multicolumn{1}{c|}{No border} \\ \hline
+x & x & x & x & \multicolumn{1}{c}{No border} & \multicolumn{1}{c}{No border} & \multicolumn{1}{c}{No border} & \multicolumn{1}{c|}{No border} & x \\ \hline
+x & x & x & x & \multicolumn{1}{c}{No border} & \multicolumn{1}{c}{No border} & \multicolumn{1}{c|}{No border} & x & x \\ \hline
+x & x & x & x & \multicolumn{1}{c}{No border} & No border & x & x & x \\ \hline
+x & x & x & x & \multicolumn{1}{c|}{No border} & x & x & x & x \\ \hline
+x & x & x & x & x & x & x & x & x \\ \hline
+\end{tabular}
+\newline
+
+
+\section{Merge Rows}
+\begin{tabular}{cccccccc|c|} \hline
+\multicolumn{1}{|c|}{x} & x & x & x & x & x & x & x & x \\ \cline{1-3}
+x & x & x & x & x & x & x & x & x \\ 
+x & x & x & x & x & x & x & x & x \\ \cline{1-2} \cline{5-6}
+x & x & x & x & x & x & x & x & x \\ 
+x & x & x & x & x & x & x & x & x \\ \cline{1-1}
+\multicolumn{1}{|c|}{x} & x & x & x & x & x & x & x & x \\ \cline{1-2}
+\multicolumn{1}{|c|}{x} & \multicolumn{1}{c|}{x} & x & x & x & x & x & x & x \\ \cline{1-3}
+\multicolumn{1}{|c|}{x} & \multicolumn{1}{c|}{x} & \multicolumn{1}{c|}{x} & x & x & x & x & x & x \\ \hline
+\multicolumn{1}{|c|}{x} & \multicolumn{1}{c|}{x} & \multicolumn{1}{c|}{x} & x & x & x & x & x & x \\ \cline{4 - 9}
+\multicolumn{1}{|c|}{x} & \multicolumn{1}{c|}{x} & \multicolumn{1}{c|}{x} & \multicolumn{1}{|c|}{x} & x & x & x & x & x \\ \hline
+\end{tabular}
+\newline
+
+
+\section{Merge Cells: Multirow}
+Uses package multirow!
+\newline
+
+\begin{tabular}{|c|c|c|c|c|} \hline
+x & x & \multirow{3}{14mm}{Beware of hline} & x & x \\ \hline
+x & x &  & x & x \\ \hline 
+x & x &  & x & x \\ \hline
+x & x & x & x & x \\ \hline
+x & x & x & \multirow{2}{14mm}{Better!} & x \\ \cline{1-3} \cline{5-5}
+x & x & x & & x \\ \hline
+\end{tabular}
+\newline
+
+
+\section{Center}
+\begin{center}
+\begin{tabular}{ccccccccc}
+x & x & x & x & Col & x & x & x & x \\ 
+Row & Row & Row & Row & X-ing & Row & Row & Row & Row \\ 
+x & x & x & x & Col & x & x & x & x \\ 
+x & x & x & x & Col & x & x & x & x \\ 
+x & x & x & x & Col & x & x & x & x \\ 
+\end{tabular}
+\newline
+\end{center}
+
+
+\section{Left-Center-Right}
+\begin{center}
+\begin{tabular}{|c|l|c|r|c|c|} \hline
+loooooong word & loooooong word & loooooong word & loooooong word & word & word \\ \hline \hline
+center & l & c & r & center & center \\ \hline
+center & l & c & r & center & center \\ \hline
+center & l & c & r & center & center \\ \hline
+\end{tabular}
+\newline
+\end{center}
+
+
+\section{Static size}
+\begin{center}
+\begin{tabular}{|c|c|p{7.5 cm}|c|c|} \hline
+x & x & x & x & x \\ \hline
+x & x & x & x & x \\ \hline 
+x & x & x & x & x \\ \hline
+x & x & x & x & x \\ \hline
+x & x & x & x & x \\ \hline
+x & x & x & x & x \\ \hline
+\end{tabular}
+\newline
+\end{center}
+
+
+\section{Static Size and Ending Sequence}
+\begin{center}
+\begin{tabular}{|c|c|p{7.5 cm}@{end of cell}|c|c|} \hline
+x & x & x & x & x \\ \hline
+x & x & x & x & x \\ \hline 
+x & x & x & x & x \\ \hline
+x & x & x & x & x \\ \hline
+x & x & x & x & x \\ \hline
+x & x & x & x & x \\ \hline
+\end{tabular}
+\newline
+\end{center}
+
+
+\pagebreak
+\section{Position}
+Possible positions are c,t or b.
+\begin{quote}
+Call me Ishmael. Some years ago- never mind how long precisely- having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. 
+\newline
+\end{quote}
+
+Call me Ishmael. Some years ago- never mind how long precisely- having 
+\begin{tabular}[c]{|c|}
+little \\
+no \\
+a lot of \\
+\end{tabular}
+money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.
+\newline
+
+Call me Ishmael. Some years ago- never mind how long precisely- having 
+\begin{tabular}[t]{|c|}
+little \\
+no \\
+a lot of \\
+\end{tabular}
+money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world. 
+\newline
+
+Call me Ishmael. Some years ago- never mind how long precisely- having 
+\begin{tabular}[b]{|c|}
+little \\
+no \\
+a lot of \\
+\end{tabular}
+money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.
+\newline 
+
+
+\section{Repeted Declaration}
+The custom way..
+\begin{center}
+\begin{tabular}{|r@{,}l|r@{,}l|r@{,}l|r@{,}l|} \hline
+1&2 & 3&4 & 5&6 & 7&8 \\ \hline
+9&10 & 11&12 & 13&14 & 15&16 \\ \hline
+\end{tabular}
+\end{center}
+
+The new way...
+\begin{center}
+\begin{tabular}{|*{4}{r@{,}l|}} \hline
+1&2 & 3&4 & 5&6 & 7&8 \\ \hline
+9&10 & 11&12 & 13&14 & 15&16 \\ \hline
+\end{tabular}
+\end{center}
+
+Serial way using a '.' instead of a ','
+\begin{center}
+\begin{tabular}{|*{4}{r@{.}l|}} \hline
+1&2 & 3&4 & 5&6 & 7&8 \\ \hline
+9&10 & 11&12 & 13&14 & 15&16 \\ \hline
+\end{tabular}
+\end{center}
+
+
+\section{Tabbing}
+\begin{tabbing}
+% define tabs after 'Command' and 'Explanation'
+Command \quad\= 
+Explanation \qquad\qquad\= 
+\kill
+% write content
+\textbf{Command} \> \textbf{Explanation}  \> \textbf{Use} \\
+$\backslash$= \> set a tab \> word $\backslash$= \\
+$\backslash$quad$\backslash$=  \> define a tab \> word $\backslash$quad$\backslash$= \\ \newline
+$\backslash$> \> next tab field \> $\backslash$> next word \\
+$\backslash$< \> previous tab field \> $\backslash$< prev word \\
+$\backslash$+ \> left side one \> end of row $\backslash$+ \+ \\
+position to the left \-\\
+$\backslash$- \> right side one \> end of row $\backslash$- \+\\
+position to the right \- \\
+$\backslash$kill \> spacer \> after tab declaration\\
+\end{tabbing}
+
+The problem of tabbing is:
+\begin{tabbing}
+This \= text is ok \\
+This text is \> screwed up!!
+\newline
+\end{tabbing}
+
+
+\section{Long Tables}
+Uses package longtable.! \\
+\begin{longtable}{|l|cc|} \hline
+end & first & head\\ \hline
+\endfirsthead
+
+all & pages & head\\ \hline
+\endhead
+
+all & pages & footer\\ \hline
+\endfoot
+
+end & last & foot\\ \hline
+\endlastfoot
+
+% content
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+x & x & x\\ 
+\end{longtable}
+
+
+\section{Array}
+\setlength{\extrarowheight}{4pt}
+\begin{tabular}{|p{2cm}|m{2cm}|b{2cm}|} \hline
+p\{\dots\} & m\{\dots\} & b\{\dots\} \\ \hline
+grounded & centered & leading \\ \hline
+Call me Ishmael. & Call me Ishmael. & Call me Ishmael. \\ \hline
+Call me Ishmael. & Call me Ishmael. & Call me Ishmael. \\ \hline
+Call me Ishmael. & Call me Ishmael. & Call me Ishmael. \\ \hline
+\end{tabular}
+\newline
+
+
+\section{Array: Format}
+Format an array using comments or commands at the column declaration. 
+\begin{itemize}
+ \item >\{comment\} sets it before a column,
+ \item <\{comment\} sets it after a column (never used it)
+ \item !\{comment\} between the columns (never ever used that one)
+\end{itemize}
+
+\setlength{\extrarowheight}{4pt}
+\begin{tabular}{|>{\bfseries BEFORE}p{2cm}|m{2cm}|>{\large\bfseries}b{2cm}|} \hline
+p\{\dots\} & m\{\dots\} & b\{\dots\} \\ \hline
+grounded & centered & leading \\ \hline
+Call me Ishmael. & Call me Ishmael. & Call me Ishmael. \\ \hline
+Call me Ishmael. & Call me Ishmael. & Call me Ishmael. \\ \hline
+Call me Ishmael. & Call me Ishmael. & Call me Ishmael. \\ \hline
+\end{tabular}
+\newline
+
+
+\pagebreak
+\section{Scientific Booktabs}
+Uses package booktabs! Tables for scientific articles.
+\begin{itemize}
+ \item $\backslash$toprule a line on top of the table
+ \item $\backslash$midrule a line within the table
+ \item $\backslash$bottomrule a line at the bottom of the table
+ \item $\backslash$cmimidrule[trim]\{ col.start - col.end \} works like $\backslash$cline, trim defines where to place the gap (l,r or lr possible)
+ \item $\backslash$addlinespace generates an additional linespace
+\end{itemize}
+
+\begin{tabular}{cclr}
+\toprule
+
+\multicolumn{3}{c}{bla} \\
+
+% use a doubled cmiruler with gap
+\cmidrule(r){1-3}\morecmidrules\cmidrule(r){1-3}
+
+bla & bla & bla & weight in g \\
+
+\midrule
+item & description & spec. & 1.1 \\
+item & description & spec. & 2.2 \\
+item & description & spec. & 3.3 \\
+item & description & spec. & 4.4 \\
+
+\addlinespace
+
+\bottomrule
+\end{tabular}
+
+
+
+\end{document}
